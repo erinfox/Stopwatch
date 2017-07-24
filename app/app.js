@@ -12,8 +12,9 @@ import anything from 'minutes-seconds-milliseconds';
 export default class Stopwatch extends Component {
   constructor(props){
     super(props);
-    this.state = {isRunning: false}
+    this.state = {isRunning: false, lastChecked: null, timeElapsed: 0}
     this.startStop = this.startStop.bind(this)
+
   }
   render() {
     return (
@@ -27,6 +28,12 @@ export default class Stopwatch extends Component {
                 onPress={this.startStop}>
                <Text style={styles.button}>{this.state.isRunning ? 'Stop' : 'Start'} </Text>
              </Button>
+
+             <Button style={{alignSelf: 'center'}}
+                onPress={() => this.setState({lastChecked: null, timeElapsed: 0})}>
+               <Text style={styles.button}>Reset</Text>
+             </Button>
+
           </View>
        </Content>
       </Container>
@@ -40,9 +47,12 @@ export default class Stopwatch extends Component {
     return
     }
 
-    this.setState({startTime: new Date(), isRunning: true})
+    this.setState({lastChecked: new Date(), isRunning: true})
     this.interval = setInterval(() => {
-      this.setState({timeElapsed: new Date() - this.state.startTime})
+      let timeSinceLastChecked = new Date() - this.state.lastChecked
+      this.setState({timeElapsed: this.state.timeElapsed + timeSinceLastChecked
+      lastChecked: new Date()
+      })
     }, 30)
   }
 }
