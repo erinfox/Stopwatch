@@ -50,7 +50,7 @@ export default class Stopwatch extends Component {
     this.setState({lastChecked: new Date(), isRunning: true})
     this.interval = setInterval(() => {
       let timeSinceLastChecked = new Date() - this.state.lastChecked
-      this.setState({timeElapsed: this.state.timeElapsed + timeSinceLastChecked
+      this.setState({timeElapsed: this.state.timeElapsed + timeSinceLastChecked,
       lastChecked: new Date()
       })
     }, 30)
